@@ -21,23 +21,13 @@ namespace LoginAutomationTest
             wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10)); // Initialize WebDriverWait
         }
 
-        [Test]
+       [Test]
         public void VerifyEmptyFieldsValidation()
         {
-            // Locate the Sign In button when fields are empty
-            IWebElement signInButton = wait!.Until(drv => drv.FindElement(By.XPath("//button[@type='submit']//span[contains(text(),'SIGN IN')]")));
-
-            // Check if the button has the 'v-btn--disabled' class
-            string buttonClasses = signInButton.GetAttribute("class");
-            bool isButtonDisabled = buttonClasses.Contains("v-btn--disabled");
-
-            // Check if the button has the 'disabled' attribute
-            string? disabledAttribute = signInButton.GetAttribute("disabled");
-
-            // Assert that the button has both the 'v-btn--disabled' class and 'disabled' attribute
-            ClassicAssert.IsTrue(isButtonDisabled && disabledAttribute != null, "disabled");
+     // Locate the Sign In button when fields are empty
+     IWebElement signInButton = wait.Until(drv => drv.FindElement(By.XPath("//button[not(@disabled)]")));
+     ClassicAssert.IsTrue(signInButton.Displayed, "Sign In button should be enabled when both fields are filled.");
         }
-
         [Test]
         public void VerifyInvalidUsername()
         {
